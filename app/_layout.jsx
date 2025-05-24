@@ -1,22 +1,31 @@
 import { Stack } from "expo-router";
+import { Colors } from "../constants/Colors";
+import { useColorScheme } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] ?? Colors.light;
+
   return (
-    <Stack
-      // applied to each individial screen, i.e. common options for each screen
-      screenOptions={{
-        headerStyle: { backgroundColor: "#ddd" },
-        headerTintColor: "#333",
-      }}
-    >
-      {/* Individual Screens */}
-      <Stack.Screen name="index" options={{ title: "Home" }} />
-      <Stack.Screen name="about" options={{ title: "About" }} />
-      <Stack.Screen
-        name="contact"
-        options={{ title: "Contact", headerShown: false }} // headerShown: false means header should not be visible for this page.
-      />
-    </Stack>
+    <>
+      <StatusBar value="auto" />
+      <Stack
+        // applied to each individial screen, i.e. common options for each screen
+        screenOptions={{
+          headerStyle: { backgroundColor: theme.navBackground },
+          headerTintColor: theme.title,
+        }}
+      >
+        {/* Individual Screens */}
+        <Stack.Screen name="index" options={{ title: "Home" }} />
+        <Stack.Screen name="about" options={{ title: "About" }} />
+        <Stack.Screen
+          name="contact"
+          options={{ title: "Contact", headerShown: false }} // headerShown: false means header should not be visible for this page.
+        />
+      </Stack>
+    </>
   );
 }
 
