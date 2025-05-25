@@ -1,7 +1,7 @@
 // [id] => square brackets means that this path is a dynamic route.
 
 import { StyleSheet } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 // themed components
 import ThemedText from "../../../components/ThemedText";
@@ -17,7 +17,13 @@ const BookDetails = () => {
   const [book, setBook] = useState(null);
 
   const { id } = useLocalSearchParams();
-  const { fetchBookById } = useBooks();
+  const { fetchBookById, deleteBook } = useBooks();
+
+  const handleDelete = async () => {
+    await deleteBook(id);
+    setBook(null);
+    router.replace("/books");
+  };
 
   useEffect(() => {
     async function loadBook() {
@@ -48,6 +54,12 @@ const BookDetails = () => {
 
         <ThemedText>{book.description}</ThemedText>
       </ThemedCard>
+
+      <ThemedButton onPress={handleDelete} style={styles.delete}>
+        <ThemedText style={{ color: "#fff", textAlign: "center" }}>
+          Delete Book
+        </ThemedText>
+      </ThemedButton>
     </ThemedView>
   );
 };
