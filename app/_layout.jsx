@@ -3,6 +3,7 @@ import { Colors } from "../constants/Colors";
 import { useColorScheme } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { UserProvider } from "../contexts/userContext";
+import { BooksProvider } from "../contexts/BooksContext";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -10,19 +11,21 @@ export default function RootLayout() {
 
   return (
     <UserProvider>
-      <StatusBar value="auto" />
-      <Stack
-        // applied to each individial screen, i.e. common options for each screen
-        screenOptions={{
-          headerStyle: { backgroundColor: theme.navBackground },
-          headerTintColor: theme.title,
-        }}
-      >
-        {/* Individual Screens */}
-        <Stack.Screen name="index" options={{ title: "Home" }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
-      </Stack>
+      <BooksProvider>
+        <StatusBar value="auto" />
+        <Stack
+          // applied to each individial screen, i.e. common options for each screen
+          screenOptions={{
+            headerStyle: { backgroundColor: theme.navBackground },
+            headerTintColor: theme.title,
+          }}
+        >
+          {/* Individual Screens */}
+          <Stack.Screen name="index" options={{ title: "Home" }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(dashboard)" options={{ headerShown: false }} />
+        </Stack>
+      </BooksProvider>
     </UserProvider>
   );
 }
